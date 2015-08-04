@@ -1,0 +1,65 @@
+apply plugin: 'maven'
+
+configurations {
+    deployerJar
+}
+
+dependencies {
+    deployerJar "ar.com.synergian:wagon-git:0.2.3"
+}
+
+uploadArchives {
+    configuration = configurations.archives
+    repositories.mavenDeployer {
+
+        pom.groupId = GROUP
+        pom.artifactId = POM_ARTIFACT_ID
+        pom.version = VERSION_NAME
+
+        configuration = configurations.deployerJar
+        repository(url: REPOSITORY_RELEASE_URL)
+        snapshotRepository(url: REPOSITORY_SNAPSHOT_URL)
+
+        pom.project {
+            name POM_NAME
+            packaging POM_PACKAGING
+            description POM_DESCRIPTION
+            url POM_URL
+
+            scm {
+                url POM_SCM_URL
+                connection POM_SCM_CONNECTION
+                developerConnection POM_SCM_DEV_CONNECTION
+            }
+
+            licenses {
+                license {
+                    name POM_LICENCE_NAME
+                    url POM_LICENCE_URL
+                    distribution POM_LICENCE_DIST
+                }
+            }
+
+            developers {
+                developer {
+                    id POM_DEVELOPER_ID
+                    name POM_DEVELOPER_NAME
+                    email POM_DEVELOPER_EMAIL
+                }
+            }
+        }
+    }
+}
+
+allprojects {
+    android {
+        lintOptions {
+            abortOnError false
+        }
+    }
+
+    repositories {
+        mavenCentral()
+        maven { url "https://raw.github.com/synergian/wagon-git/releases"}
+    }
+}
