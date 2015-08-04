@@ -52,12 +52,6 @@ uploadArchives {
 }
 
 allprojects {
-    android {
-        lintOptions {
-            abortOnError false
-        }
-    }
-
     repositories {
         mavenCentral()
         maven { url "https://raw.github.com/synergian/wagon-git/releases"}
